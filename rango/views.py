@@ -28,7 +28,7 @@ def show_category(request, category_name_slug):
         # We'll use this in the template to verify that the category exists
         context_dict['category'] = category
 
-    except Cateogry.DoesNotExist:
+    except Category.DoesNotExist:
         # We get here if we didnt find the specified category
         # dont do anything
         context_dict['category'] = None
@@ -47,9 +47,11 @@ def index(request):
     # '-likes' return categories in descending order
     # [:5] retrieves the top 5 subset of category objects
     category_list = Category.objects.order_by('-likes')[:5]
+    page_list = Page.objects.order_by('-views')[:5]
+
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-    context_dict = {'categories': category_list}
+    context_dict = {'categories': category_list, 'pages': page_list}
 
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
