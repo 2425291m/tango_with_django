@@ -2,33 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render
 # import the category model
-from rango.models import Category, Page
+from rango.models import Category
+from rango.models import Page
 from rango.forms import CategoryForm
-
-def add_category(request):
-    form = CategoryForm()
-
-    # A HTTP POST?
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-
-        # Have we been provided with a valid form>
-        if form.is_valid():
-            # save the new cat to the database
-            form.save(commit=True)
-            # now that the cat is saved
-            # we could give a confirmation message
-            # but since the most recent cat added is on the index page
-            # then we can direct the user back to the index page
-            return index(request)
-        else:
-            # the supplied form contained errors -
-            # just print them to the terminal.
-            print(form.errors)
-
-        # will handle the bad form, new form, or no form supplied cases.
-        # render the form with error messages (if any).
-        return render(request, 'rango/add_category.html', {'form': form})
 
 def show_category(request, category_name_slug):
 
@@ -86,3 +62,24 @@ def index(request):
 def about(request):
     return render(request, 'rango/about.html')
 
+def add_category(request):
+    form = CategoryForm()
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            category = form.save(commit=True)
+            print(category, category.slug)
+            # Now that the category is saved
+            # We could give a confirmation message
+            # But instead since the most recent catergory added is on the index page
+            # Then we can direct the user back to the index page.
+            return index(request)
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print(form.errors)
+    # Will handle the bad form (or form details), new form or no form supplied cases.
+    # Render the form with error messages (if any).
+    return render(request, 'rango/add_category.html', {'form': form})
