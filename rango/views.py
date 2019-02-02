@@ -70,8 +70,8 @@ def add_category(request):
         # Have we been provided with a valid form?
         if form.is_valid():
             # Save the new category to the database.
-            category = form.save(commit=True)
-            print(category, category.slug)
+            cat = form.save(commit=True)
+            print(cat, cat.slug)
             # Now that the category is saved
             # We could give a confirmation message
             # But instead since the most recent catergory added is on the index page
