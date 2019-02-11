@@ -30,13 +30,14 @@ class Page(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    # this line is requires. Links UserProfile to a user model instance
+    # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User)
 
-    # the additional attributes we wish to include
+    # The additional attributes we wish to include.
     website = models.URLField(blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
-
-    # override the __unicode__() method to return out something meaningful
+    
+    # Override the __unicode__() method to return out something meaningful!
+    # Remember if you use Python 2.7.x, define __unicode__ too!
     def __str__(self):
         return self.user.username

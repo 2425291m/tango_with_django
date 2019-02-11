@@ -31,7 +31,7 @@ class PageForm(forms.ModelForm):
             url = 'http://' + url
             cleaned_data['url'] = url
             
-        return cleaned_data
+            return cleaned_data
 
     class Meta:
         # Provide an association between the ModelForm and a models
@@ -54,5 +54,5 @@ class UserForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = UserProfile 
+        model = UserProfile
         fields = ('website', 'picture')
