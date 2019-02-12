@@ -79,7 +79,14 @@ def about(request):
     print(request.method)
     #prints out the user name, if no one is logged in prints 'anonymousUser'
     print(request.user)
-    return render(request, 'rango/about.html', {})
+
+    context_dictionary = {}
+    if request.session.get('visits'):
+        count = request.session.get('visits')
+    else:
+        count = 0
+    context_dictionary['visits'] = str(count)
+    return render(request, 'rango/about.html', context_dictionary)
 
 def add_category(request):
     form = CategoryForm()
